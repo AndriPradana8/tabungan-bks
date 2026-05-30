@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/ui', function () {
+    return view('pages.dashboard.ecommerce');
+});
 
 Route::get('/dashboard', function (Illuminate\Http\Request $request) {
     $role = $request->user()->role->nama_role;
@@ -26,8 +29,12 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('dashboard');
+        return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::get('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'index'])->name('admin.nasabah');
+    Route::post('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'store'])->name('admin.nasabah.store');
+    Route::put('/admin/nasabah/{user}', [\App\Http\Controllers\Admin\NasabahController::class, 'update'])->name('admin.nasabah.update');
 });
 
 Route::middleware(['auth', 'verified', 'role:nasabah'])->group(function () {
