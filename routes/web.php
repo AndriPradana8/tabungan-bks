@@ -35,6 +35,11 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'index'])->name('admin.nasabah');
     Route::post('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'store'])->name('admin.nasabah.store');
     Route::put('/admin/nasabah/{user}', [\App\Http\Controllers\Admin\NasabahController::class, 'update'])->name('admin.nasabah.update');
+
+    Route::get('/admin/tabungan', [\App\Http\Controllers\Admin\TabunganController::class, 'index'])->name('admin.tabungan');
+    Route::post('/admin/tabungan/setor', [\App\Http\Controllers\Admin\TabunganController::class, 'setor'])->name('admin.tabungan.setor');
+    Route::post('/admin/tabungan/tarik', [\App\Http\Controllers\Admin\TabunganController::class, 'tarik'])->name('admin.tabungan.tarik');
+    Route::get('/admin/tabungan/riwayat/{user}', [\App\Http\Controllers\Admin\TabunganController::class, 'riwayat'])->name('admin.tabungan.riwayat');
 });
 
 Route::middleware(['auth', 'verified', 'role:nasabah'])->group(function () {

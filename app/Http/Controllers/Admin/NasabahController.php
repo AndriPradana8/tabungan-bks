@@ -64,6 +64,11 @@ class NasabahController extends Controller
             'alamat' => $request->alamat,
         ]);
 
+        \App\Models\Tabungan::create([
+            'user_id' => $user->id,
+            'saldo' => 0,
+        ]);
+
         return redirect()->route('admin.nasabah')->with('success', 'Data nasabah berhasil ditambahkan!');
     }
 
