@@ -6,17 +6,21 @@
     'placeholder' => 'Select date',
     'name' => null,
     'dateFormat' => 'Y-m-d',
+    'altFormat' => null,
+    'isStatic' => true,
 ])
 
-<div x-data="{
+<div {{ $attributes }} x-data="{
     flatpickrInstance: null,
     init() {
         this.$nextTick(() => {
             this.flatpickrInstance = flatpickr(this.$refs.dateInput, {
                 mode: '{{ $mode }}',
-                static: true,
+                static: {{ $isStatic ? 'true' : 'false' }},
                 monthSelectorType: 'static',
                 dateFormat: '{{ $dateFormat }}',
+                altInput: {{ $altFormat ? 'true' : 'false' }},
+                altFormat: '{{ $altFormat ?? '' }}',
                 defaultDate: {{ $defaultDate ? (is_array($defaultDate) ? json_encode($defaultDate) : "'" . $defaultDate . "'") : 'null' }},
                 onChange: (selectedDates, dateStr, instance) => {
                     this.$dispatch('date-change', {

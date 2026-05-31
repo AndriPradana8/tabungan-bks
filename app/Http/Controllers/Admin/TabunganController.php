@@ -129,4 +129,25 @@ class TabunganController extends Controller
 
         return view('admin.riwayat-tabungan', compact('user', 'transaksis'));
     }
+
+    public function semuaRiwayat(Request $request)
+    {
+        $query = Transaksi::with(['admin', 'tabungan.user']);
+
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->whereHas('tabungan.user', function($q) use ($searchTerm) {
+                $q->where('nama', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('nik', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->has('date') && $request->date != '') {
+            $query->whereDate('created_at', $request->date);
+        }
+
+        $transaksis = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        return view('admin.semua-riwayat', compact('transaksis'));
+    }
 }

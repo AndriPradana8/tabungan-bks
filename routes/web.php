@@ -28,9 +28,7 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'index'])->name('admin.nasabah');
     Route::post('/admin/nasabah', [\App\Http\Controllers\Admin\NasabahController::class, 'store'])->name('admin.nasabah.store');
@@ -40,6 +38,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::post('/admin/tabungan/setor', [\App\Http\Controllers\Admin\TabunganController::class, 'setor'])->name('admin.tabungan.setor');
     Route::post('/admin/tabungan/tarik', [\App\Http\Controllers\Admin\TabunganController::class, 'tarik'])->name('admin.tabungan.tarik');
     Route::get('/admin/tabungan/riwayat/{user}', [\App\Http\Controllers\Admin\TabunganController::class, 'riwayat'])->name('admin.tabungan.riwayat');
+    Route::get('/admin/riwayat', [\App\Http\Controllers\Admin\TabunganController::class, 'semuaRiwayat'])->name('admin.riwayat');
 });
 
 Route::middleware(['auth', 'verified', 'role:nasabah'])->group(function () {

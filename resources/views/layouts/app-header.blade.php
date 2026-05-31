@@ -64,30 +64,6 @@
                         fill="currentColor" />
                 </svg>
             </button>
-
-            <!-- Search Bar (desktop only) -->
-            <div class="hidden xl:block">
-                <form>
-                    <div class="relative">
-                        <span class="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
-                            <!-- Search Icon -->
-                            <svg class="fill-gray-500 dark:fill-gray-400" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M3.04175 9.37363C3.04175 5.87693 5.87711 3.04199 9.37508 3.04199C12.8731 3.04199 15.7084 5.87693 15.7084 9.37363C15.7084 12.8703 12.8731 15.7053 9.37508 15.7053C5.87711 15.7053 3.04175 12.8703 3.04175 9.37363ZM9.37508 1.54199C5.04902 1.54199 1.54175 5.04817 1.54175 9.37363C1.54175 13.6991 5.04902 17.2053 9.37508 17.2053C11.2674 17.2053 13.003 16.5344 14.357 15.4176L17.177 18.238C17.4699 18.5309 17.9448 18.5309 18.2377 18.238C18.5306 17.9451 18.5306 17.4703 18.2377 17.1774L15.418 14.3573C16.5365 13.0033 17.2084 11.2669 17.2084 9.37363C17.2084 5.04817 13.7011 1.54199 9.37508 1.54199Z"
-                                    fill="" />
-                            </svg>
-                        </span>
-                        <input type="text" placeholder="Search or type command..."
-                            class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-white/3 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[430px]" />
-                        <button
-                            class="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400">
-                            <span> ⌘ </span>
-                            <span> K </span>
-                        </button>
-                    </div>
-                </form>
-            </div>
         </div>
 
         <!-- Application Menu (mobile) and Right Side Actions (desktop) -->
@@ -112,12 +88,75 @@
                     </svg>
                 </button>
 
-                <!-- Notification Dropdown -->
-                <x-header.notification-dropdown />
             </div>
 
             <!-- User Dropdown -->
-            <x-header.user-dropdown />
+            <div class="relative" x-data="{
+                dropdownOpen: false,
+                toggleDropdown() {
+                    this.dropdownOpen = !this.dropdownOpen;
+                },
+                closeDropdown() {
+                    this.dropdownOpen = false;
+                }
+            }" @click.away="closeDropdown()">
+                <!-- User Button -->
+                <button
+                    class="flex items-center text-gray-700 dark:text-gray-400"
+                    @click.prevent="toggleDropdown()"
+                    type="button"
+                >
+                    <span class="mr-3 overflow-hidden rounded-full h-11 w-11">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" />
+                    </span>
+
+                <span class="block mr-1 font-medium text-theme-sm">Musharof</span>
+
+                    <!-- Chevron Icon -->
+                    <svg
+                        class="w-5 h-5 transition-transform duration-200"
+                        :class="{ 'rotate-180': dropdownOpen }"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Start -->
+                <div
+                    x-show="dropdownOpen"
+                    x-transition:enter="transition ease-out duration-100"
+                    x-transition:enter-start="transform opacity-0 scale-95"
+                    x-transition:enter-end="transform opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-75"
+                    x-transition:leave-start="transform opacity-100 scale-100"
+                    x-transition:leave-end="transform opacity-0 scale-95"
+                    class="absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark z-50"
+                    style="display: none;"
+                >
+
+                    <!-- Sign Out -->
+                    {{-- <form method="POST" action="#">
+                        @csrf --}}
+                        <a
+                            href="/signin"
+                            class="flex items-center w-full gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+                            @click="closeDropdown()"
+                        >
+                            <span class="text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                </svg>
+                            </span>
+                            Sign out
+                        </a>
+                    {{-- </form> --}}
+                </div>
+                <!-- Dropdown End -->
+            </div>
+
         </div>
     </div>
 </header>
