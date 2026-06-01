@@ -43,8 +43,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:nasabah'])->group(function () {
     Route::get('/nasabah/dashboard', function () {
-        return view('dashboard');
+        return redirect()->route('nasabah.home');
     })->name('nasabah.dashboard');
+
+    Route::get('/nasabah/home', [\App\Http\Controllers\Nasabah\HomeController::class, 'index'])->name('nasabah.home');
 });
 
 Route::middleware('auth')->group(function () {
