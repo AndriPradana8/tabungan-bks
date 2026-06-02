@@ -29,25 +29,25 @@
     <div class="col-span-12 lg:col-span-6">
       <div class="grid grid-cols-2 gap-1 md:gap-2 h-full">
         {{-- Setoran Bulan Ini --}}
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-center w-12 h-12  bg-green-50 rounded-xl dark:bg-green-500/10">
-              <i class="fa-solid fa-arrow-down text-green-600 text-xl"></i>
-            </div>
-            <span class="mt-3 block text-sm text-gray-500 dark:text-gray-400">Setoran Bulan Ini</span>
+        <div class="rounded-2xl border border-gray-200 bg-white p-4 md:p-6 dark:border-gray-800 dark:bg-white/[0.03] flex flex-row items-center gap-3 md:flex-col md:items-start md:justify-between">
+          <div class="flex items-center justify-center w-12 h-12 bg-green-50 rounded-xl shrink-0 dark:bg-green-500/10">
+            <i class="fa-solid fa-arrow-down text-green-600 text-lg"></i>
           </div>
-          <h4 class="mt-2 font-bold text-gray-800 text-xl dark:text-white/90">Rp {{ number_format($totalSetorBulanIni, 0, ',', '.') }}</h4>
+          <div class="flex flex-col gap-0.5 md:contents">
+            <span class="text-xs text-gray-500 dark:text-gray-400 md:mt-3 md:text-sm">Setoran Bulan Ini</span>
+            <h4 class="font-bold text-gray-800 text-base md:text-xl dark:text-white/90">Rp {{ number_format($totalSetorBulanIni, 0, ',', '.') }}</h4>
+          </div>
         </div>
 
         {{-- Penarikan Bulan Ini --}}
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-center w-12 h-12 bg-red-50 rounded-xl dark:bg-red-500/10">
-              <i class="fa-solid fa-arrow-up text-red-600 text-xl"></i>
-            </div>
-            <span class="mt-3 block text-sm text-gray-500 dark:text-gray-400">Penarikan Bulan Ini</span>
+        <div class="rounded-2xl border border-gray-200 bg-white p-4 md:p-6 dark:border-gray-800 dark:bg-white/[0.03] flex flex-row items-center gap-3 md:flex-col md:items-start md:justify-between">
+          <div class="flex items-center justify-center w-12 h-12 bg-red-50 rounded-xl shrink-0 dark:bg-red-500/10">
+            <i class="fa-solid fa-arrow-up text-red-600 text-lg"></i>
           </div>
-          <h4 class="mt-2 font-bold text-gray-800 text-xl dark:text-white/90">Rp {{ number_format($totalTarikBulanIni, 0, ',', '.') }}</h4>
+          <div class="flex flex-col gap-0.5 md:contents">
+            <span class="text-xs text-gray-500 dark:text-gray-400 md:mt-3 md:text-sm">Penarikan Bulan Ini</span>
+            <h4 class="font-bold text-gray-800 text-base md:text-xl dark:text-white/90">Rp {{ number_format($totalTarikBulanIni, 0, ',', '.') }}</h4>
+          </div>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Transaksi Terakhir</h3>
             <a href="/nasabah/riwayat" class="text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors">
-              Lihat Semua <i class="fa-solid fa-arrow-right ml-1 text-[12px]"></i>
+              Lihat Semua <i class="fa-solid fa-arrow-right text-brand-500 text-sm"></i>
             </a>
           </div>
         </div>
@@ -68,7 +68,7 @@
           @if($recentTransactions->isEmpty())
             <div class="text-center py-8">
               <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full dark:bg-gray-800">
-                <i class="fa-solid fa-receipt text-gray-500 text-[24px]"></i>
+                <i class="fa-solid fa-receipt text-gray-400 text-2xl"></i>
               </div>
               <p class="text-gray-500 dark:text-gray-400">Belum ada transaksi</p>
             </div>
@@ -79,9 +79,9 @@
                   <div class="flex items-center gap-4">
                     <div class="flex items-center justify-center w-10 h-10 rounded-full {{ $trx->jenis_transaksi === 'setor' ? 'bg-green-100 dark:bg-green-500/10' : 'bg-red-100 dark:bg-red-500/10' }}">
                       @if($trx->jenis_transaksi === 'setor')
-                        <i class="fa-solid fa-arrow-down text-green-600 text-[18px]"></i>
+                        <i class="fa-solid fa-arrow-down text-green-600 text-md"></i>
                       @else
-                        <i class="fa-solid fa-arrow-up text-red-600 text-[18px]"></i>
+                        <i class="fa-solid fa-arrow-up text-red-600 text-md"></i>
                       @endif
                     </div>
                     <div>
