@@ -22,9 +22,25 @@ Route::get('/dashboard', function (Illuminate\Http\Request $request) {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
-    Route::get('/superadmin/dashboard', function () {
-        return view('dashboard');
-    })->name('superadmin.dashboard');
+    Route::get('/superadmin/dashboard', [\App\Http\Controllers\Superadmin\DashboardController::class, 'index'])->name('superadmin.dashboard');
+
+    Route::get('/superadmin/nasabah', [\App\Http\Controllers\Superadmin\NasabahController::class, 'index'])->name('superadmin.nasabah');
+    Route::put('/superadmin/nasabah/{user}/toggle', [\App\Http\Controllers\Superadmin\NasabahController::class, 'toggleStatus'])->name('superadmin.nasabah.toggle');
+    Route::delete('/superadmin/nasabah/{user}', [\App\Http\Controllers\Superadmin\NasabahController::class, 'destroy'])->name('superadmin.nasabah.destroy');
+
+    Route::get('/superadmin/admin', [\App\Http\Controllers\Superadmin\AdminController::class, 'index'])->name('superadmin.admin');
+    Route::post('/superadmin/admin', [\App\Http\Controllers\Superadmin\AdminController::class, 'store'])->name('superadmin.admin.store');
+    Route::put('/superadmin/admin/{user}', [\App\Http\Controllers\Superadmin\AdminController::class, 'update'])->name('superadmin.admin.update');
+    Route::put('/superadmin/admin/{user}/toggle', [\App\Http\Controllers\Superadmin\AdminController::class, 'toggleStatus'])->name('superadmin.admin.toggle');
+    Route::delete('/superadmin/admin/{user}', [\App\Http\Controllers\Superadmin\AdminController::class, 'destroy'])->name('superadmin.admin.destroy');
+
+    Route::get('/superadmin/laporan/transaksi', [\App\Http\Controllers\Superadmin\LaporanController::class, 'transaksi'])->name('superadmin.laporan.transaksi');
+    Route::get('/superadmin/laporan/saldo', [\App\Http\Controllers\Superadmin\LaporanController::class, 'saldo'])->name('superadmin.laporan.saldo');
+    Route::get('/superadmin/laporan/export-pdf', [\App\Http\Controllers\Superadmin\LaporanController::class, 'exportPdf'])->name('superadmin.laporan.export-pdf');
+
+    Route::get('/superadmin/pengaturan', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'index'])->name('superadmin.pengaturan');
+    Route::put('/superadmin/pengaturan/profile', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'updateProfile'])->name('superadmin.pengaturan.profile');
+    Route::put('/superadmin/pengaturan/password', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'updatePassword'])->name('superadmin.pengaturan.password');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
