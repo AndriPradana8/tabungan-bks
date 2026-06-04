@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Helpers\ActivityLogger;
 
 class NasabahController extends Controller
 {
@@ -39,6 +40,9 @@ class NasabahController extends Controller
             $user->update(['status_akun' => $newStatus]);
             
             $statusText = $newStatus === 'aktif' ? 'diaktifkan' : 'dinonaktifkan';
+
+            ActivityLogger::log('Mengubah status nasabah ' . $user->nama . ' menjadi ' . $newStatus);
+
             return redirect()->route('superadmin.nasabah')->with('success', "Akun nasabah berhasil {$statusText}!");
         }
 
@@ -50,7 +54,11 @@ class NasabahController extends Controller
         $roleNasabah = Role::where('nama_role', 'nasabah')->first();
         
         if ($user->role_id === $roleNasabah->id) {
+            $nama = $user->nama;
             $user->delete();
+
+            ActivityLogger::log('Menghapus data nasabah: ' . $nama);
+
             return redirect()->route('superadmin.nasabah')->with('success', 'Data nasabah berhasil dihapus!');
         }
 

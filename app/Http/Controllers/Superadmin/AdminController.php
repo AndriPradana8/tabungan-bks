@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Helpers\ActivityLogger;
 
 class AdminController extends Controller
 {
@@ -55,6 +56,8 @@ class AdminController extends Controller
             'status_akun' => 'aktif',
         ]);
 
+        ActivityLogger::log('Menambahkan data admin baru: ' . $request->nama);
+
         return redirect()->route('superadmin.admin')->with('success', 'Data admin berhasil ditambahkan!');
     }
 
@@ -82,6 +85,8 @@ class AdminController extends Controller
 
         $user->update($updateData);
 
+        ActivityLogger::log('Mengubah data admin: ' . $request->nama);
+
         return redirect()->route('superadmin.admin')->with('success', 'Data admin berhasil diperbarui!');
     }
 
@@ -94,6 +99,9 @@ class AdminController extends Controller
             $user->update(['status_akun' => $newStatus]);
             
             $statusText = $newStatus === 'aktif' ? 'diaktifkan' : 'dinonaktifkan';
+
+            ActivityLogger::log('Mengubah status admin ' . $user->nama . ' menjadi ' . $newStatus);
+
             return redirect()->route('superadmin.admin')->with('success', "Akun admin berhasil {$statusText}!");
         }
 
@@ -105,7 +113,11 @@ class AdminController extends Controller
         $roleAdmin = Role::where('nama_role', 'admin')->first();
         
         if ($user->role_id === $roleAdmin->id) {
+            $nama = $user->nama;
             $user->delete();
+
+            ActivityLogger::log('Menghapus data admin: ' . $nama);
+
             return redirect()->route('superadmin.admin')->with('success', 'Data admin berhasil dihapus!');
         }
 

@@ -10,6 +10,7 @@ use App\Models\Tabungan;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\ActivityLogger;
 
 class TabunganController extends Controller
 {
@@ -67,6 +68,9 @@ class TabunganController extends Controller
             ]);
 
             DB::commit();
+
+            ActivityLogger::log('Menyetorkan saldo Rp ' . number_format($request->nominal, 0, ',', '.') . ' ke ' . $user->nama);
+
             return redirect()->back()->with('success', 'Setoran berhasil diproses!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -110,6 +114,9 @@ class TabunganController extends Controller
             ]);
 
             DB::commit();
+
+            ActivityLogger::log('Menarik saldo Rp ' . number_format($request->nominal, 0, ',', '.') . ' dari ' . $user->nama);
+
             return redirect()->back()->with('success', 'Penarikan berhasil diproses!');
         } catch (\Exception $e) {
             DB::rollBack();

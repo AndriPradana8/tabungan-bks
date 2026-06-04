@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use App\Helpers\ActivityLogger;
 
 class PengaturanController extends Controller
 {
@@ -28,6 +29,8 @@ class PengaturanController extends Controller
             'username' => $request->username,
         ]);
 
+        ActivityLogger::log('Memperbarui profil akun');
+
         return back()->with('success', 'Profil berhasil diperbarui!');
     }
 
@@ -47,6 +50,8 @@ class PengaturanController extends Controller
         $user->update([
             'password' => Hash::make($request->password),
         ]);
+
+        ActivityLogger::log('Mengubah password akun');
 
         return back()->with('success_password', 'Password berhasil diperbarui!');
     }

@@ -50,4 +50,29 @@ class HomeController extends Controller
             'totalTarikBulanIni'
         ));
     }
+
+    public function riwayat(Request $request)
+    {
+        $user = Auth::user();
+        $tabungan = $user->tabungan;
+
+        $query = Transaksi::where('tabungan_id', $tabungan ? $tabungan->id : 0)
+            ->with('admin');
+
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = strtolower($request->search);
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('jenis_transaksi', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('nominal', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->has('date') && $request->date != '') {
+            $query->whereDate('created_at', $request->date);
+        }
+
+        $transaksis = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+
+        return view('nasabah.riwayat', compact('transaksis', 'user'));
+    }
 }

@@ -3,7 +3,6 @@
 @section('content')
 <div class="mb-6">
     <h2 class="text-2xl font-semibold text-black dark:text-white">Pengaturan</h2>
-    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola informasi profil dan keamanan akun Anda.</p>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -12,8 +11,9 @@
     <div class="rounded-2xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div class="px-6 py-4 border-b border-gray-100 dark:border-white/[0.05]">
             <h3 class="text-base font-semibold text-gray-800 dark:text-white">Informasi Profil</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Perbarui nama dan username akun Anda.</p>
         </div>
+
+        
 
         @if (session('success'))
             <div x-data="{ show: true }"
@@ -73,7 +73,6 @@
     <div class="rounded-2xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div class="px-6 py-4 border-b border-gray-100 dark:border-white/[0.05]">
             <h3 class="text-base font-semibold text-gray-800 dark:text-white">Ubah Password</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Pastikan akun Anda menggunakan password yang kuat.</p>
         </div>
 
         @if (session('success_password'))
@@ -121,7 +120,7 @@
                 <label for="password" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Password Baru</label>
                 <div class="relative">
                     <input :type="showNew ? 'text' : 'password'" id="password" name="password"
-                        placeholder="Minimal 8 karakter"
+                        placeholder="Masukkan password baru"
                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800
                         @error('password') border-red-400 dark:border-red-500 @enderror">
                     <button type="button" @click="showNew = !showNew"
@@ -156,39 +155,5 @@
         </form>
     </div>
 
-</div>
-
-{{-- Info Card --}}
-<div class="mt-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-white/[0.05] dark:bg-white/[0.03]">
-    <h3 class="text-base font-semibold text-gray-800 dark:text-white mb-4">Informasi Akun</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 dark:bg-brand-500/10">
-                <i class="fa-solid fa-user text-brand-500 text-sm"></i>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Nama</p>
-                <p class="text-sm font-medium text-gray-800 dark:text-white">{{ auth()->user()->nama }}</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 dark:bg-green-500/10">
-                <i class="fa-solid fa-at text-green-500 text-sm"></i>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Username</p>
-                <p class="text-sm font-medium text-gray-800 dark:text-white">{{ auth()->user()->username }}</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-purple-50 dark:bg-purple-500/10">
-                <i class="fa-solid fa-shield-halved text-purple-500 text-sm"></i>
-            </div>
-            <div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Role</p>
-                <p class="text-sm font-medium text-gray-800 dark:text-white capitalize">{{ auth()->user()->role->nama_role }}</p>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection

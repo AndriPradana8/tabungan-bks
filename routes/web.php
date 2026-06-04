@@ -41,6 +41,8 @@ Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/superadmin/pengaturan', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'index'])->name('superadmin.pengaturan');
     Route::put('/superadmin/pengaturan/profile', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'updateProfile'])->name('superadmin.pengaturan.profile');
     Route::put('/superadmin/pengaturan/password', [\App\Http\Controllers\Superadmin\PengaturanController::class, 'updatePassword'])->name('superadmin.pengaturan.password');
+
+    Route::get('/superadmin/activity-log', [\App\Http\Controllers\Superadmin\ActivityLogController::class, 'index'])->name('superadmin.activity-log');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -63,6 +65,7 @@ Route::middleware(['auth', 'verified', 'role:nasabah'])->group(function () {
     })->name('nasabah.dashboard');
 
     Route::get('/nasabah/home', [\App\Http\Controllers\Nasabah\HomeController::class, 'index'])->name('nasabah.home');
+    Route::get('/nasabah/riwayat', [\App\Http\Controllers\Nasabah\HomeController::class, 'riwayat'])->name('nasabah.riwayat');
 });
 
 Route::middleware('auth')->group(function () {

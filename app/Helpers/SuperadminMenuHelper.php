@@ -37,6 +37,11 @@ class SuperadminMenuHelper
                 ],
             ],
             [
+                'icon' => 'activity-log',
+                'name' => 'Log Aktivitas',
+                'path' => '/superadmin/activity-log',
+            ],
+            [
                 'icon' => 'settings',
                 'name' => 'Pengaturan',
                 'path' => '/superadmin/pengaturan',

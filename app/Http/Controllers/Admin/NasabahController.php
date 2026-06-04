@@ -9,6 +9,7 @@ use App\Models\Nasabah;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use App\Helpers\ActivityLogger;
 
 class NasabahController extends Controller
 {
@@ -69,6 +70,8 @@ class NasabahController extends Controller
             'saldo' => 0,
         ]);
 
+        ActivityLogger::log('Menambahkan data nasabah baru: ' . $request->nama);
+
         return redirect()->route('admin.nasabah')->with('success', 'Data nasabah berhasil ditambahkan!');
     }
 
@@ -96,6 +99,8 @@ class NasabahController extends Controller
                 'alamat' => $request->alamat,
             ]);
         }
+
+        ActivityLogger::log('Mengubah data nasabah: ' . $request->nama);
 
         return redirect()->route('admin.nasabah')->with('success', 'Data nasabah berhasil diperbarui!');
     }
