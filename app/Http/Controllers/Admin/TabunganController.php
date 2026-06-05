@@ -127,11 +127,11 @@ class TabunganController extends Controller
     public function riwayat(User $user)
     {
         $user->load(['nasabah', 'tabungan.transaksis' => function($query) {
-            $query->orderBy('created_at', 'desc');
+            $query->where('admin_id', Auth::id())->orderBy('created_at', 'desc');
         }, 'tabungan.transaksis.admin']);
 
         $transaksis = $user->tabungan
-            ? $user->tabungan->transaksis()->with('admin')->orderBy('created_at', 'desc')->paginate(10)
+            ? $user->tabungan->transaksis()->where('admin_id', Auth::id())->with('admin')->orderBy('created_at', 'desc')->paginate(10)
             : collect();
 
         return view('admin.riwayat-tabungan', compact('user', 'transaksis'));
@@ -139,7 +139,7 @@ class TabunganController extends Controller
 
     public function semuaRiwayat(Request $request)
     {
-        $query = Transaksi::with(['admin', 'tabungan.user']);
+        $query = Transaksi::with(['admin', 'tabungan.user'])->where('admin_id', Auth::id());
 
         if ($request->has('search') && $request->search != '') {
             $searchTerm = $request->search;

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Tabungan;
 use App\Models\Transaksi;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -21,10 +22,12 @@ class DashboardController extends Controller
         $today = Carbon::today();
         
         $setoranHariIni = Transaksi::where('jenis_transaksi', 'setor')
+            ->where('admin_id', Auth::id())
             ->whereDate('created_at', $today)
             ->sum('nominal');
             
         $penarikanHariIni = Transaksi::where('jenis_transaksi', 'tarik')
+            ->where('admin_id', Auth::id())
             ->whereDate('created_at', $today)
             ->sum('nominal');
 
