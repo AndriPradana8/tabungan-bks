@@ -115,7 +115,7 @@
             
             get totalSaldoTerpilih() {
                 return this.selectedIds.reduce((sum, id) => {
-                    return sum + (this.allBalances[id] || 0);
+                    return sum + parseFloat(this.allBalances[id] || 0);
                 }, 0);
             },
             

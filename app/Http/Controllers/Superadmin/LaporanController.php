@@ -92,7 +92,7 @@ class LaporanController extends Controller
             ->where('status_akun', 'aktif')
             ->leftJoin('tabungans', 'users.id', '=', 'tabungans.user_id')
             ->pluck('tabungans.saldo', 'users.id')
-            ->map(fn($val) => $val ?? 0)
+            ->map(fn($val) => (float) ($val ?? 0))
             ->toArray();
 
         return view('superadmin.laporan.saldo', [
