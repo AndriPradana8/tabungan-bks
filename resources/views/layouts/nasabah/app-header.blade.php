@@ -49,9 +49,9 @@
             </button>
 
             <!-- Logo (mobile only) -->
-            <a href="/" class="xl:hidden">
-                <img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-                <img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+            <a href="/" class="xl:hidden flex items-center">
+                <img class="dark:hidden w-[140px] h-auto" src="/images/logo/logo.png" alt="Logo" />
+                <img class="hidden dark:block w-[140px] h-auto" src="/images/logo/logo.png" alt="Logo" />
             </a>
 
             <!-- Application Menu Toggle (mobile only) -->
@@ -93,10 +93,16 @@
             <div class="relative flex items-center">
                 <!-- User Profile -->
                 <div class="flex items-center text-gray-700 dark:text-gray-400">
-                    <span class="mr-3 overflow-hidden rounded-full h-11 w-11">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" />
+                    @php
+                        $name = Auth::user()->nama ?? 'User';
+                        $initials = collect(explode(' ', $name))->map(function($segment) {
+                            return strtoupper(substr($segment, 0, 1));
+                        })->take(2)->join('');
+                    @endphp
+                    <span class="mr-3 flex items-center justify-center overflow-hidden rounded-full h-11 w-11 bg-blue-600 text-white font-bold text-lg">
+                        {{ $initials }}
                     </span>
-                    <span class="block font-medium text-theme-sm">{{ Auth::user()->nama ?? 'Nasabah' }}</span>
+                    <span class="block font-medium text-theme-sm">{{ $name }}</span>
                 </div>
             </div>
         </div>

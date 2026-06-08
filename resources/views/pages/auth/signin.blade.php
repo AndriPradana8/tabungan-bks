@@ -1,11 +1,17 @@
 @extends('layouts.fullscreen-layout')
 
 @section('content')
-    <div class="relative z-1 bg-white p-6 sm:p-0 dark:bg-gray-900">
-        <div class="relative flex h-screen w-full flex-col justify-center sm:p-0 lg:flex-row dark:bg-gray-900">
+    <div class="relative z-1 h-screen lg:bg-white dark:lg:bg-gray-900 overflow-y-auto">
+        <!-- Mobile/Tablet Background with Overlay -->
+        <div class="absolute inset-0 z-0 lg:hidden bg-cover bg-center bg-no-repeat fixed" style="background-image: url('/images/logo/logo-auth.png');">
+            <div class="absolute inset-0 bg-black/60 dark:bg-black/70"></div>
+        </div>
+
+        <div class="relative z-10 flex h-screen min-h-[600px] w-full flex-col justify-center sm:p-0 lg:flex-row">
             <!-- Form -->
-            <div class="flex w-full flex-1 flex-col lg:w-1/2">
-                <div class="mx-auto w-full max-w-md pt-10">
+            <div class="flex w-full flex-1 flex-col justify-center lg:w-1/2 p-4 sm:p-8 lg:p-0">
+                <div class="mx-auto flex w-full max-w-md flex-col justify-center bg-white dark:bg-gray-800 lg:bg-transparent dark:lg:bg-transparent p-6 sm:p-10 lg:p-0 rounded-2xl shadow-2xl lg:shadow-none">
+                    <div class="w-full mb-6 lg:pt-10">
                     <a href="/"
                         class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                         <svg class="stroke-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -140,13 +146,13 @@
                 </div>
             </div>
 
-            <div class="bg-brand-950 relative hidden h-full w-full items-center lg:grid lg:w-1/2 dark:bg-white/5">
+            <div class="relative hidden h-full w-full items-center lg:grid lg:w-1/2 bg-contain bg-center bg-no-repeat bg-[#1e2329]" style="background-image: url('/images/logo/logo-auth.png');">
                 <div class="z-1 flex items-center justify-center">
                     <!-- ===== Common Grid Shape Start ===== -->
                     <x-common.common-grid-shape/>
                     <div class="flex max-w-xs flex-col items-center">
                         <a href="/" class="mb-4 block">
-                            <img src="./images/logo/auth-logo.svg" alt="Logo" />
+                            <img src="./images/logo/auth-logo.png" alt="Logo" />
                         </a>
                         <p class="text-center text-gray-400 dark:text-white/60">
                             Free and Open-Source Tailwind CSS Admin Dashboard Template
